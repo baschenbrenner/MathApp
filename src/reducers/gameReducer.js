@@ -16,16 +16,16 @@ export default (state = {
       return Object.assign({}, state, { numberSetA: [5,6,7,8,9,5,6,7,8,9], numberSetB: [7,8,6,6,7,8,9,8,7,9]})
 
     case 'GET_NEXT_QUESTION':
-      return
+      return {}
 
     case 'CHECK_ANSWER':
-      return
+      return {}
 
     case 'FINISH_GAME':
-      return
+      return {}
 
     case 'FETCH_MOVIES':
-      return 
+      return {}
 
     default:
       return state;
