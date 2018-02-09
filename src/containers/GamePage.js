@@ -8,7 +8,7 @@ class GamePage extends Component {
 
   render() {
 
-    const {match, game}= this.props
+    const {game}= this.props
     return (
       <div>Game Page
 
