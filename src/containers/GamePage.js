@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { setNumbersForGame, startGame } from '../actions/gameActions';
+import { setNumbersForGame, startGame, endGame } from '../actions/gameActions';
 import AnswerInput from '../components/AnswerInput';
-
+import ShowResults from '../components/ShowResults';
 
 class GamePage extends Component {
   constructor() {
@@ -33,7 +33,7 @@ subtractTime() {
       totalTimeLeft: totalLeft,
        questionTimeLeft: questionTimeLeft
   })
-  if (this.state. totalTimeLeft > 0)
+  if ((this.state.totalTimeLeft > 0) && (this.props.game.status !== "finished"))
   {
       if (this.state.questionTimeLeft === 0)
         {this.increaseIndex()
@@ -63,12 +63,16 @@ startGame = () => {
   this.startTimers()
 }
 
+
 restartTimer() {
   let currentIndex = this.state.index
-  this.setState({
-    index: currentIndex + 1,
-    questionTimeLeft: 5
-  })
+  if (currentIndex < 10)
+      {this.setState({
+        index: currentIndex + 1,
+        questionTimeLeft: 5
+      })}
+  else
+      {this.props.endGame()}
 }
 shouldComponentUpdate(nextProps, nextState) {
   return (true);
@@ -94,6 +98,7 @@ componentDidUpdate() {
         <br/>
         <br/>
         <br/>
+        <ShowResults correct={this.props.game.numberCorrect}/>
         <br/>
         <button onClick={this.handleSetup}>Setup Game</button>
         <button onClick={this.startGame}>Start Game</button>
@@ -116,4 +121,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, { setNumbersForGame, startGame })(GamePage);
+export default connect(mapStateToProps, { setNumbersForGame, startGame, endGame })(GamePage);

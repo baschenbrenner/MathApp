@@ -25,8 +25,8 @@ export default (state = {
 
       return Object.assign({},state, {status: "started"})
 
-    case 'GET_NEXT_QUESTION':
-      return {}
+    case 'END_GAME':
+      return Object.assign({},state, {status: "finished"})
 
     case 'CHECK_ANSWER':
       let suppliedAnswer = action.answer;
