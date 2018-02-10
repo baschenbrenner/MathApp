@@ -98,7 +98,11 @@ componentDidUpdate() {
         <br/>
         <br/>
         <br/>
-        <ShowResults correct={this.props.game.numberCorrect}/>
+        <ShowResults
+         status={this.props.game.status}
+         correct={this.props.game.numberCorrect}
+         incorrect={this.props.game.numberIncorrect}
+         timeLeft={this.state.totalTimeLeft}/>
         <br/>
         <button onClick={this.handleSetup}>Setup Game</button>
         <button onClick={this.startGame}>Start Game</button>
