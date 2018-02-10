@@ -13,8 +13,10 @@ class AnswerInput extends Component {
 
     handleOnSubmit = event => {
       event.preventDefault();
-      checkAnswer(this.state.answer);
-
+      this.props.checkAnswer(this.state.answer, this.props.index);
+      this.setState({
+        answer: ""
+      })
     }
 
     handleOnChange = event => {
@@ -29,7 +31,8 @@ class AnswerInput extends Component {
           <input
             type="text"
             onChange={this.handleOnChange}
-            placeholder="Answer" />
+            placeholder="Answer"
+            value = {this.state.answer}/>
           <input type="submit" value="Submit Answer" />
         </form>
       );

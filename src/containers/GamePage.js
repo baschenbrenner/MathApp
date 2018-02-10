@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { setNumbersForGame } from '../actions/gameActions';
-import AnswerInput from '../components/AnswerInput'
+import AnswerInput from '../components/AnswerInput';
 
 
 class GamePage extends Component {
@@ -21,12 +21,13 @@ increaseIndex() {
   })
 
 }
-handleOnClick = () => {
+handleSetup = () => {
   this.props.setNumbersForGame()
 }
 
 componentDidUpdate(){
-  console.log("hey")
+
+  console.log("I updated and my new index is" + this.state.index)
   if (this.state.index < 5) {
   setTimeout(this.increaseIndex,5000)}
 }
@@ -36,10 +37,10 @@ componentDidUpdate(){
       <div>Game Page
         <br/> Solve this:
         <p>
-        {game.numberSetA[this.state.index]} x {game.numberSetB[this.state.index]}
+          {this.props.game.numberSetA[this.state.index]} x {this.props.game.numberSetB[this.state.index]}
         </p>
-        <AnswerInput />
-        <button onClick={this.handleOnClick}>Start Game</button>
+        <AnswerInput index={this.state.index}/>
+        <button onClick={this.handleSetup}>Setup Game</button>
 
       </div>
     )

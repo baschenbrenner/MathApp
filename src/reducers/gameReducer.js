@@ -20,24 +20,29 @@ export default (state = {
 
     case 'CHECK_ANSWER':
       let suppliedAnswer = action.answer;
-      let index = action.index;
-      let rightAnswer
+      let problemNumber = action.index;
+      let rightAnswer;
+      let newNumberCorrect = state.numberCorrect;
+      let newNumberIncorrect = state.numberIncorrect;
 
       switch(state.operation){
         case 'multiplication':
-          return rightAnswer = state.numberSetA[index]*state.numberSetB[index]
+           rightAnswer = state.numberSetA[problemNumber]*state.numberSetB[problemNumber];
+           break
         case 'addition':
-          return rightAnswer = state.numberSetA[index]+state.numberSetB[index]
+          rightAnswer = state.numberSetA[problemNumber]+state.numberSetB[problemNumber]
+          break
         default:
-          return rightAnswer = 2
+          break
         }
 
-          if (suppliedAnswer === rightAnswer)
-            {return Object.assign({}, state, {numberCorrect: 1})}
-          else {
-            return state
-          }
 
+          if (parseInt(suppliedAnswer) === rightAnswer)
+            { newNumberCorrect += 1}
+          else
+            { newNumberIncorrect += 1}
+
+      return Object.assign({}, state, {numberCorrect: newNumberCorrect, numberIncorrect: newNumberIncorrect})
 
 
     case 'FINISH_GAME':

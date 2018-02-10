@@ -4,9 +4,10 @@ export const setNumbersForGame = () => {
   };
 };
 
-export const checkAnswer = (answer) => {
+export const checkAnswer = (answer, index) => {
   return {
     type: 'CHECK_ANSWER',
-    answer: answer
+    answer: answer,
+    index: index
   };
 };
