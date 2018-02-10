@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { setNumbersForGame } from '../actions/gameActions';
-
+import AnswerInput from '../components/AnswerInput'
 
 
 class GamePage extends Component {
@@ -10,7 +10,6 @@ class GamePage extends Component {
       super();
 
       this.increaseIndex = this.increaseIndex.bind(this)
-      
       this.state = {
         index: 0
       };
@@ -28,19 +27,20 @@ handleOnClick = () => {
 
 componentDidUpdate(){
   console.log("hey")
-  setTimeout(this.increaseIndex,5000)
+  if (this.state.index < 5) {
+  setTimeout(this.increaseIndex,5000)}
 }
   render() {
-
-    const {game}= this.props
+    const {match, game} = this.props
     return (
       <div>Game Page
-      <br/>
-      Solve this:
-      <p>
-      {this.props.game.numberSetA[this.state.index]} x {this.props.game.numberSetB[this.state.index]}
-      </p>
+        <br/> Solve this:
+        <p>
+        {game.numberSetA[this.state.index]} x {game.numberSetB[this.state.index]}
+        </p>
+        <AnswerInput />
         <button onClick={this.handleOnClick}>Start Game</button>
+
       </div>
     )
   }

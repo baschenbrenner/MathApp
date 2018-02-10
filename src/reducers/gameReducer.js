@@ -19,7 +19,26 @@ export default (state = {
       return {}
 
     case 'CHECK_ANSWER':
-      return {}
+      let suppliedAnswer = action.answer;
+      let index = action.index;
+      let rightAnswer
+
+      switch(state.operation){
+        case 'multiplication':
+          return rightAnswer = state.numberSetA[index]*state.numberSetB[index]
+        case 'addition':
+          return rightAnswer = state.numberSetA[index]+state.numberSetB[index]
+        default:
+          return rightAnswer = 2
+        }
+
+          if (suppliedAnswer === rightAnswer)
+            {return Object.assign({}, state, {numberCorrect: 1})}
+          else {
+            return state
+          }
+
+
 
     case 'FINISH_GAME':
       return {}

@@ -3,3 +3,10 @@ export const setNumbersForGame = () => {
     type: 'SET_NUMBERS_FOR_GAME'
   };
 };
+
+export const checkAnswer = (answer) => {
+  return {
+    type: 'CHECK_ANSWER',
+    answer: answer
+  };
+};
