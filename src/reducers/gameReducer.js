@@ -13,17 +13,18 @@ export default (state = {
   switch (action.type) {
 
     case 'SET_NUMBERS_FOR_GAME':
-      let setA = []
-      let setB = [7,8,6,6,7,8,9,8,7,9]
-        for (let i=0;i<10;i++)
+      let setA = [""]
+      let setB = [""]
+        for (let i=1;i<11;i++)
         {setA[i]= Math.floor(Math.random() * 8)+5;
          setB[i]= Math.floor(Math.random() * 8)+5;}
 
       return Object.assign({}, state, { numberSetA: setA, numberSetB: setB})
 
     case 'START_GAME':
-      return {}
-      
+
+      return Object.assign({},state, {status: "started"})
+
     case 'GET_NEXT_QUESTION':
       return {}
 

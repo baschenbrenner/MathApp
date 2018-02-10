@@ -11,3 +11,9 @@ export const checkAnswer = (answer, index) => {
     index: index
   };
 };
+
+export const startGame = () => {
+  return {
+    type: 'START_GAME'
+  };
+};

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { setNumbersForGame } from '../actions/gameActions';
+import { setNumbersForGame, startGame } from '../actions/gameActions';
 import AnswerInput from '../components/AnswerInput';
 
 
@@ -25,12 +25,11 @@ handleSetup = () => {
   this.props.setNumbersForGame()
 }
 
-componentDidUpdate(){
-
-  console.log("I updated and my new index is" + this.state.index)
-  if (this.state.index < 5) {
-  setTimeout(this.increaseIndex,5000)}
+startGame = () => {
+  this.props.startGame()
 }
+
+
   render() {
     const {match, game} = this.props
     return (
@@ -41,6 +40,7 @@ componentDidUpdate(){
         </p>
         <AnswerInput index={this.state.index}/>
         <button onClick={this.handleSetup}>Setup Game</button>
+        <button onClick={this.startGame}>Start Game</button>
 
       </div>
     )
@@ -53,4 +53,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, { setNumbersForGame })(GamePage);
+export default connect(mapStateToProps, { setNumbersForGame, startGame })(GamePage);
