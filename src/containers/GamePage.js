@@ -10,23 +10,75 @@ class GamePage extends Component {
       super();
 
       this.increaseIndex = this.increaseIndex.bind(this)
+      this.subtractTime = this.subtractTime.bind(this)
+      this.startGame = this.startGame.bind(this)
+      this.restartTimer = this.restartTimer.bind(this)
+
       this.state = {
-        index: 0
+        index: 0,
+        totalTimeLeft: 50,
+        questionTimeLeft: 5
       };
     }
 
 increaseIndex() {
   this.setState({
-    index: this.state.index + 1
+    index: this.state.index + 1,
   })
-
 }
+subtractTime() {
+  let totalLeft = this.state.totalTimeLeft - 1
+  let questionTimeLeft = this.state.questionTimeLeft - 1
+  this.setState({
+      totalTimeLeft: totalLeft,
+       questionTimeLeft: questionTimeLeft
+  })
+  if (this.state. totalTimeLeft > 0)
+  {
+      if (this.state.questionTimeLeft === 0)
+        {this.increaseIndex()
+          this.setState({
+            questionTimeLeft: 5
+          })
+          setTimeout(this.subtractTime,1000)
+        }
+      else {setTimeout(this.subtractTime,1000)}
+    }
+}
+
+startTimers() {
+  setTimeout(this.subtractTime,1000)
+}
+
+
 handleSetup = () => {
   this.props.setNumbersForGame()
 }
 
 startGame = () => {
+  this.setState({
+    index: 1
+  })
   this.props.startGame()
+  this.startTimers()
+}
+
+restartTimer() {
+  let currentIndex = this.state.index
+  this.setState({
+    index: currentIndex + 1,
+    questionTimeLeft: 5
+  })
+}
+shouldComponentUpdate(nextProps, nextState) {
+  return (true);
+}
+
+
+componentDidUpdate() {
+  console.log("My index is " + this.state.index)
+  console.log(Date.now())
+
 }
 
 
@@ -38,9 +90,20 @@ startGame = () => {
         <p>
           {this.props.game.numberSetA[this.state.index]} x {this.props.game.numberSetB[this.state.index]}
         </p>
-        <AnswerInput index={this.state.index}/>
+        <AnswerInput index={this.state.index} restartTimer={this.restartTimer}/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <button onClick={this.handleSetup}>Setup Game</button>
         <button onClick={this.startGame}>Start Game</button>
+        <br/>
+
+        <h2>Time Left for Question: {this.state.questionTimeLeft}</h2>
+        <br/>
+        <br/>
+        <br/>
+        <h3>Time Left for Game: {this.state.totalTimeLeft}</h3>
 
       </div>
     )

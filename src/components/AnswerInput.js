@@ -17,6 +17,7 @@ class AnswerInput extends Component {
       this.setState({
         answer: ""
       })
+      this.props.restartTimer()
     }
 
     handleOnChange = event => {
@@ -32,7 +33,7 @@ class AnswerInput extends Component {
             type="text"
             onChange={this.handleOnChange}
             placeholder="Answer"
-            value = {this.state.answer}/>
+            value={this.state.answer}/>
           <input type="submit" value="Submit Answer" />
         </form>
       );
