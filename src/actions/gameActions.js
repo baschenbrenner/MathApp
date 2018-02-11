@@ -23,3 +23,15 @@ export const endGame = () => {
     type: 'END_GAME'
   };
 };
+
+export const resetGame = () => {
+  return {
+    type: 'RESET_GAME'
+  };
+};
+
+export const addUnanswered = () => {
+  return {
+    type: 'ADD_UNANSWERED'
+  };
+};

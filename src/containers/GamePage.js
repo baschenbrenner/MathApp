@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { setNumbersForGame, startGame, endGame } from '../actions/gameActions';
+import { setNumbersForGame, startGame, endGame, resetGame, addUnanswered } from '../actions/gameActions';
 import AnswerInput from '../components/AnswerInput';
 import ShowResults from '../components/ShowResults';
 
@@ -13,6 +13,7 @@ class GamePage extends Component {
       this.subtractTime = this.subtractTime.bind(this)
       this.startGame = this.startGame.bind(this)
       this.restartTimer = this.restartTimer.bind(this)
+      this.resetGame = this.resetGame.bind(this)
 
       this.state = {
         index: 0,
@@ -36,7 +37,8 @@ subtractTime() {
   if ((this.state.totalTimeLeft > 0) && (this.props.game.status !== "finished"))
   {
       if (this.state.questionTimeLeft === 0)
-        {this.increaseIndex()
+        { this.props.addUnanswered()
+          this.increaseIndex()
           this.setState({
             questionTimeLeft: 5
           })
@@ -50,12 +52,8 @@ startTimers() {
   setTimeout(this.subtractTime,1000)
 }
 
-
-handleSetup = () => {
-  this.props.setNumbersForGame()
-}
-
 startGame = () => {
+  this.props.setNumbersForGame()
   this.setState({
     index: 1
   })
@@ -74,8 +72,14 @@ restartTimer() {
   else
       {this.props.endGame()}
 }
-shouldComponentUpdate(nextProps, nextState) {
-  return (true);
+
+resetGame() {
+  this.setState({
+    index: 0,
+    questionTimeLeft: 5,
+    totalTimeLeft: 50
+  })
+  this.props.resetGame()
 }
 
 
@@ -102,10 +106,12 @@ componentDidUpdate() {
          status={this.props.game.status}
          correct={this.props.game.numberCorrect}
          incorrect={this.props.game.numberIncorrect}
+         unanswered={this.props.game.numberUnanswered}
          timeLeft={this.state.totalTimeLeft}/>
         <br/>
-        <button onClick={this.handleSetup}>Setup Game</button>
+
         <button onClick={this.startGame}>Start Game</button>
+        <button onClick={this.resetGame}>Reset Game</button>
         <br/>
 
         <h2>Time Left for Question: {this.state.questionTimeLeft}</h2>
@@ -125,4 +131,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, { setNumbersForGame, startGame, endGame })(GamePage);
+export default connect(mapStateToProps, { setNumbersForGame, startGame, endGame, resetGame, addUnanswered })(GamePage);

@@ -16,17 +16,23 @@ export default (state = {
       let setA = [""]
       let setB = [""]
         for (let i=1;i<11;i++)
-        {setA[i]= Math.floor(Math.random() * 8)+5;
-         setB[i]= Math.floor(Math.random() * 8)+5;}
+        {setA[i]= Math.floor(Math.random() * 11)+1;
+         setB[i]= Math.floor(Math.random() * 11)+1;}
 
       return Object.assign({}, state, { numberSetA: setA, numberSetB: setB})
 
     case 'START_GAME':
-
       return Object.assign({},state, {status: "started"})
 
     case 'END_GAME':
       return Object.assign({},state, {status: "finished"})
+
+    case 'RESET_GAME':
+      return Object.assign({},state, {status: "unstarted"})
+
+    case 'ADD_UNANSWERED':
+      let newNumberUnanswered = state.numberUnanswered + 1
+      return Object.assign({},state, {numberUnanswered: newNumberUnanswered})
 
     case 'CHECK_ANSWER':
       let suppliedAnswer = action.answer;
