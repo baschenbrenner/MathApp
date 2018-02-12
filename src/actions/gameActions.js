@@ -42,7 +42,7 @@ export const addUnanswered = () => {
 export const changeGameParameters = (object) => {
   return {
     type: 'CHANGE_GAME_PARAMETERS',
-    operation: "multiplication",
+    operation: object.operation,
     timePerQuestion: object.timePerQuestion,
     topNumber: object.topNumber,
     bottomNumber: object.bottomNumber,

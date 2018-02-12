@@ -97,6 +97,15 @@ componentDidUpdate() {
 
 }
 
+renderOperationSymbol() {
+  if (this.props.game.operation === "multiplication")
+  {return "x"}
+  else if (this.props.game.operation === "addition")
+  {return "+"}
+  else {
+    return "x"
+  }
+}
 
   render() {
     const {match, game} = this.props
@@ -105,7 +114,7 @@ componentDidUpdate() {
         <GameParameters />
         <br/> Solve this:
         <p>
-          {this.props.game.numberSetA[this.state.index]} x {this.props.game.numberSetB[this.state.index]}
+          {this.props.game.numberSetA[this.state.index]} {this.renderOperationSymbol()} {this.props.game.numberSetB[this.state.index]}
         </p>
         <AnswerInput index={this.state.index} restartTimer={this.restartTimer}/>
         <br/>

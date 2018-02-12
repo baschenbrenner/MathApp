@@ -93,8 +93,8 @@ export class GameParameters extends React.Component {
           <input type="submit" onClick={this.handleSubmit}/> <br/>
           Operation <br/>
           <div onChange={this.handleOpChange}>
-          <input type="radio" name="operation" value="multiplication" checked/> Multiplication<br/>
-          <input type="radio" name="operation" value="addition"/> Addition<br/>
+          <input type="radio" name="operation" value="multiplication" id="mult" checked={this.state.operation === "multiplication"}/> Multiplication<br/>
+          <input type="radio" name="operation" value="addition" id="add" checked={this.state.operation === "addition"}/> Addition<br/>
           </div>
         </form>
       </div>
