@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { setNumbersForGame, startGame, endGame, resetGame, addUnanswered } from '../actions/gameActions';
 import AnswerInput from '../components/AnswerInput';
 import ShowResults from '../components/ShowResults';
+import GameParameters from '../components/GameParameters';
 
 class GamePage extends Component {
   constructor() {
@@ -14,6 +15,7 @@ class GamePage extends Component {
       this.startGame = this.startGame.bind(this)
       this.restartTimer = this.restartTimer.bind(this)
       this.resetGame = this.resetGame.bind(this)
+      this.setTotalTime = this.setTotalTime.bind(this)
 
       this.state = {
         index: 0,
@@ -27,6 +29,7 @@ increaseIndex() {
     index: this.state.index + 1,
   })
 }
+
 subtractTime() {
   let totalLeft = this.state.totalTimeLeft - 1
   let questionTimeLeft = this.state.questionTimeLeft - 1
@@ -53,18 +56,19 @@ startTimers() {
 }
 
 startGame = () => {
-  this.props.setNumbersForGame()
+  this.props.setNumbersForGame(this.props.game.numberOfQuestions,this.props.game.topNumber,this.props.game.bottomNumber)
   this.setState({
     index: 1
   })
   this.props.startGame()
+  this.setTotalTime()
   this.startTimers()
 }
 
 
 restartTimer() {
   let currentIndex = this.state.index
-  if (currentIndex < 10)
+  if (currentIndex < this.props.game.numberOfQuestions)
       {this.setState({
         index: currentIndex + 1,
         questionTimeLeft: 5
@@ -82,7 +86,11 @@ resetGame() {
   this.props.resetGame()
 }
 
-
+setTotalTime() {
+  this.setState({
+    totalTimeLeft: this.props.game.timePerQuestion * this.props.game.numberOfQuestions
+  })
+}
 componentDidUpdate() {
   console.log("My index is " + this.state.index)
   console.log(Date.now())
@@ -94,6 +102,7 @@ componentDidUpdate() {
     const {match, game} = this.props
     return (
       <div>Game Page
+        <GameParameters />
         <br/> Solve this:
         <p>
           {this.props.game.numberSetA[this.state.index]} x {this.props.game.numberSetB[this.state.index]}

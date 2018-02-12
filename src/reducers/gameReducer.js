@@ -4,6 +4,8 @@ export default (state = {
   operation: "multiplication",
   timePerQuestion: 5,
   numberOfQuestions: 10,
+  topNumber: 12,
+  bottomNumber: 7,
   numberCorrect: 0,
   numberIncorrect: 0,
   numberUnanswered: 0,
@@ -12,12 +14,18 @@ export default (state = {
 }, action) => {
   switch (action.type) {
 
+    case 'CHANGE_GAME_PARAMETERS':
+      return Object.assign({}, state, {operation: action.operation, timePerQuestion: parseInt(action.timePerQuestion, 10), numberOfQuestions: parseInt(action.numberOfQuestions, 10), topNumber: parseInt(action.topNumber, 10), bottomNumber: parseInt(action.bottomNumber, 10)})
+
     case 'SET_NUMBERS_FOR_GAME':
+      let n = action.numberOfQuestions
+      let t = state.topNumber
+      let b = state.bottomNumber
       let setA = [""]
       let setB = [""]
-        for (let i=1;i<11;i++)
-        {setA[i]= Math.floor(Math.random() * 11)+1;
-         setB[i]= Math.floor(Math.random() * 11)+1;}
+        for (let i=1;i<n+1;i++)
+        {setA[i]= Math.floor(Math.random() * (t-b+1))+b;
+         setB[i]= Math.floor(Math.random() * (t-b+1))+b;}
 
       return Object.assign({}, state, { numberSetA: setA, numberSetB: setB})
 
@@ -33,6 +41,7 @@ export default (state = {
     case 'ADD_UNANSWERED':
       let newNumberUnanswered = state.numberUnanswered + 1
       return Object.assign({},state, {numberUnanswered: newNumberUnanswered})
+
 
     case 'CHECK_ANSWER':
       let suppliedAnswer = action.answer;
@@ -53,16 +62,13 @@ export default (state = {
         }
 
 
-          if (parseInt(suppliedAnswer) === rightAnswer)
+          if (parseInt(suppliedAnswer, 10) === rightAnswer)
             { newNumberCorrect += 1}
           else
             { newNumberIncorrect += 1}
 
       return Object.assign({}, state, {numberCorrect: newNumberCorrect, numberIncorrect: newNumberIncorrect})
 
-
-    case 'FINISH_GAME':
-      return {}
 
     case 'FETCH_MOVIES':
       return {}
