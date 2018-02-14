@@ -37,7 +37,7 @@ subtractTime() {
       totalTimeLeft: totalLeft,
        questionTimeLeft: questionTimeLeft
   })
-  if ((this.state.totalTimeLeft > 0) && (this.props.game.status !== "finished"))
+  if ((this.state.totalTimeLeft > 0) && (this.props.game.status === "started"))
   {
       if (this.state.questionTimeLeft === 0)
         { this.props.addUnanswered()
@@ -80,8 +80,7 @@ restartTimer() {
 resetGame() {
   this.setState({
     index: 0,
-    questionTimeLeft: 5,
-    totalTimeLeft: 50
+    questionTimeLeft: this.props.game.timePerQuestion
   })
   this.props.resetGame()
 }
@@ -102,9 +101,7 @@ renderOperationSymbol() {
   {return "x"}
   else if (this.props.game.operation === "addition")
   {return "+"}
-  else {
-    return "x"
-  }
+  else {return "x"}
 }
 
   render() {
